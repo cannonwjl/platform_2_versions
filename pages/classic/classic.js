@@ -1,168 +1,110 @@
-import {ClassicModel} from '../../models/classic.js'
-import {LikeModel} from
-'../../models/like.js'
-//module HTTP;
-let classicModel = new ClassicModel()
-let likeModel = new LikeModel()
-// pages/classic/classic.js
 Page({
-
-properties:{
-  cid:Number,
-  type:Number
-},
-  /**
-   * 页面的初始数据
-   */
   data: {
-    classic:null,//理解模块数据更新 //
-   // test:1,
-    like:false,
-    first:true,
-    latest:false,
-    likeCount:0,
-    likeStatus:false,
+    filterId: 1,
+    address: '定位中…',
+
+
+    item: {
+      img: "/images/post/a.jpg",
+    },
+    shops: app.globalData.shops
   },
-  // attached(options) {
-  //   const cid = this.properties.cid
-  //   const type = this.properties.type
-  //   if (!cid) {
-  //     classicModel.getLatest((res) => {
-  //       this.setData({
-  //         classic: res,
-  //         likeCount: res.fav_nums,
-  //         likeStatus: res.data.like_status
-  //       })
-  //     })
-  //   }
-  //   else {
-  //     classicModel.getById(cid, type, res => {
-  //       this._getLikeStatus(res.data.id, res.data.type)
-  //       this.setData({
-  //         classic: res,
-  //         latest: classicModel.isLatest(resdd.index),
-  //         first: classicModel.isFirst(res.data.index)
-  //       })
-  //     })
-  //   }
-  // },
-
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    console.log("运行到了onLoak了");
- //   this._getLikeStatus(res.dta.id, res.data.type)
-//异步与同步 getlatest
-//数据更新
-//this.data.test=2 //对于data下的test数据更新不能这么用
-//数据更新，storage
-    classicModel.getLatest((res)=>{
-      console.log(res);
-     // this._getLikeStatus(res.id, res.type);
+  onLoad: function () {
+    var self = this;
+    //数据绑定 2018-9-4 完成数据提取 将其提取到index-data.js文件内
     this.setData({
-      //扩展运算符 ES6新增语法 解决反复在wxml里classic.~的问题
-      //以下代码可以换为  ...res  并且在classic.data.index 换为data.index
-      classic:res,
-     // test:3 
-      likeCount: res.data.fav_nums,
-      likeStatus:res.data.like_status,
-    })
-    // latestClassic latesIndex currentClassic currentIndex
-      console.log(this.data.classic);
-      console.log(this.data.like_status);
-})
+      banners: banners.banners,
+      icons: icons.icons
+    });
 
-
-   
-
-    //此函数移动到了 models/classic.js方法下 2018-8-26
-    // http.request({
-    //   url:"/classic/latest",
-    //   success:(res)=>{
-    //     console.log(res)
-    //   }
-    // })
-      //  wx.request({
-      //    url: 'http://bl.7yue.pro/v1/classic/latest',
-      //    header:{
-      //      appkey:"pe6lyAeHjpf7FrQf"
-      //    },
-      //    //箭头函数
-      //    success:(res)=>{
-      //      console.log(this.data.test)
-      //    }
-      //  })
-  },
-
-  onLike: function (event) {
-     
-     //通过打印 id 值 和 category 值 来查看是否获取到  打印后发现无定义 知道了是值没获取到 通过对数组分析知道是 classic内还有一层
-     //这里是this.data.classic.data.id;而不是视频中的this.data.classic.id;
-    let id=this.data.classic.data.id;
-    let category=this.data.classic.data.type;
-    console.log(event);
-    let behavior=event.detail.behavior;
-    
-    console.log("behavior is " + behavior + " id is " + id + " type is " + category );
-    likeModel.like(behavior, id, category);
-  },
-//========================================================
-  onNext:function(event)
-  {
-      console.log('this is onNext');
-      this._updateClassic('next');
-  },
-
-
-  onPrevious:function(event){
-     console.log('this is onPrevious');
-     this._updateClassic('previous');
-  },
-
-
-//私有函数放到最下面
-  _updateClassic: function (nextOrPrevious) {
-    let index = this.data.classic.data.index;
-
-    classicModel.getClassic(index, nextOrPrevious, (res) => {
-      this._getLikeStatus(res.data.id,res.data.type)
-      this.setData({
-        classic: res,
-        latest: classicModel.isLatest(res.data.index),
-        first: classicModel.isFirst(res.data.index)
-      })
-      //  console.log(latest + " " + first);
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        server.getJSON('/waimai/api/location.php', {
+          latitude: latitude,
+          longitude: longitude
+        }, function (res) {
+          console.log(res)
+          if (res.data.status != -1) {
+            self.setData({
+              // address: res.data.result.address_component.street_number
+            });
+          } else {
+            self.setData({
+              address: '定位失败'
+            });
+          }
+        });
+      }
     })
   },
-
- 
   onShow: function () {
-  //模板字符串
-  //
-  console.log("这里是模板字符串=======ES6新增语法===========pages/classic/classic.js下===================")
-  let a=123
-  console.log(`第一种引用变量${a}456`)
-    console.log(`第二种引用函数${this.text()}456`)
-    console.log("这里向上模板字符串=======ES6新增语法======================================================")
   },
-
-text:function()
-{
-  return 123
-},
-
-_getLikeStatus:function(artID,category)
-{
-   likeModel.getClassicLikeStatus(artID,category,
-   (res)=>{
+  onScroll: function (e) {
+    if (e.detail.scrollTop > 100 && !this.data.scrollDown) {
       this.setData({
-          likeCount:res.data.fav_nums,
-          likeStatus:res.data.like_status
-      })
-      
-   })
-}
-  
-})
+        scrollDown: true
+      });
+    } else if (e.detail.scrollTop < 100 && this.data.scrollDown) {
+      this.setData({
+        scrollDown: false
+      });
+    }
+  },
+  tapSearch: function () {
+    wx.navigateTo({ url: 'search' });
+    // wx.redirectTo({
+    //   url: 'search',
+    // })
+  },
+  toNearby: function () {
+    var self = this;
+    self.setData({
+      scrollIntoView: 'nearby'
+    });
+    self.setData({
+      scrollIntoView: null
+    });
+  },
+  tiao: function () {
+    wx: wx.navigateTo({       //可以返回
+      url: '/pages/index/ddd',
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    });
+  },
+  tapFilter: function (e) {
+    switch (e.target.dataset.id) {
+      case '1':
+        this.data.shops.sort(function (a, b) {
+          return a.id > b.id;
+        });
+        break;
+      case '2':
+        this.data.shops.sort(function (a, b) {
+          return a.sales < b.sales;
+        });
+        break;
+      case '3':
+        this.data.shops.sort(function (a, b) {
+          return a.distance > b.distance;
+        });
+        break;
+    }
+    this.setData({
+      filterId: e.target.dataset.id,
+      shops: this.data.shops
+    });
+  },
+  tapBanner: function (e) {
+    var name = banners.banners[e.target.dataset.id].name;
+    wx.showModal({
+      title: '提示',
+      content: '您点击了“' + name + '”活动链接，活动页面暂未完成！',
+      showCancel: false
+    });
+  }
+});
