@@ -1,110 +1,95 @@
-Page({
+import {
+  ClassicModel
+} from '../../models/classic.js'
+import {
+  LikeModel
+} from '../../models/like.js'
+
+const classicModel = new ClassicModel()
+const likeModel = new LikeModel()
+
+Component({
+
+  /**
+   * 页面的初始数据
+   */
+
+  properties: {
+    cid: Number,
+    type: Number
+  },
+
   data: {
-    filterId: 1,
-    address: '定位中…',
+    classic: null,
+    latest: true,
+    first: false,
+    likeCount: 0,
+    likeStatus: false
+  },
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
 
-    item: {
-      img: "/images/post/a.jpg",
+  attached(options) {
+    const cid = this.properties.cid
+    const type = this.properties.type
+    if (!cid) {
+      classicModel.getLatest((res) => {
+        this.setData({
+          classic: res,
+          likeCount: res.fav_nums,
+          likeStatus: res.like_status
+        })
+      })
+    }
+    else{
+      classicModel.getById(cid, type,res=>{
+        this._getLikeStatus(res.id, res.type)
+        this.setData({
+          classic: res,
+          latest: classicModel.isLatest(res.index),
+          first: classicModel.isFirst(res.index)
+        }) 
+      })
+    }
+  },
+
+  methods: {
+    onLike: function (event) {
+      const behavior = event.detail.behavior
+      likeModel.like(behavior, this.data.classic.id,
+        this.data.classic.type)
     },
-    shops: app.globalData.shops
-  },
-  onLoad: function () {
-    var self = this;
-    //数据绑定 2018-9-4 完成数据提取 将其提取到index-data.js文件内
-    this.setData({
-      banners: banners.banners,
-      icons: icons.icons
-    });
 
-    wx.getLocation({
-      type: 'gcj02',
-      success: function (res) {
-        var latitude = res.latitude;
-        var longitude = res.longitude;
-        server.getJSON('/waimai/api/location.php', {
-          latitude: latitude,
-          longitude: longitude
-        }, function (res) {
-          console.log(res)
-          if (res.data.status != -1) {
-            self.setData({
-              // address: res.data.result.address_component.street_number
-            });
-          } else {
-            self.setData({
-              address: '定位失败'
-            });
-          }
-        });
-      }
-    })
-  },
-  onShow: function () {
-  },
-  onScroll: function (e) {
-    if (e.detail.scrollTop > 100 && !this.data.scrollDown) {
-      this.setData({
-        scrollDown: true
-      });
-    } else if (e.detail.scrollTop < 100 && this.data.scrollDown) {
-      this.setData({
-        scrollDown: false
-      });
-    }
-  },
-  tapSearch: function () {
-    wx.navigateTo({ url: 'search' });
-    // wx.redirectTo({
-    //   url: 'search',
-    // })
-  },
-  toNearby: function () {
-    var self = this;
-    self.setData({
-      scrollIntoView: 'nearby'
-    });
-    self.setData({
-      scrollIntoView: null
-    });
-  },
-  tiao: function () {
-    wx: wx.navigateTo({       //可以返回
-      url: '/pages/index/ddd',
-      success: function (res) { },
-      fail: function (res) { },
-      complete: function (res) { },
-    });
-  },
-  tapFilter: function (e) {
-    switch (e.target.dataset.id) {
-      case '1':
-        this.data.shops.sort(function (a, b) {
-          return a.id > b.id;
-        });
-        break;
-      case '2':
-        this.data.shops.sort(function (a, b) {
-          return a.sales < b.sales;
-        });
-        break;
-      case '3':
-        this.data.shops.sort(function (a, b) {
-          return a.distance > b.distance;
-        });
-        break;
-    }
-    this.setData({
-      filterId: e.target.dataset.id,
-      shops: this.data.shops
-    });
-  },
-  tapBanner: function (e) {
-    var name = banners.banners[e.target.dataset.id].name;
-    wx.showModal({
-      title: '提示',
-      content: '您点击了“' + name + '”活动链接，活动页面暂未完成！',
-      showCancel: false
-    });
+    onNext: function (event) {
+      this._updateClassic('next')
+    },
+
+    onPrevious: function (event) {
+      this._updateClassic('previous')
+    },
+
+    _updateClassic: function (nextOrPrevious) {
+      const index = this.data.classic.index
+      classicModel.getClassic(index, nextOrPrevious, (res) => {
+        this._getLikeStatus(res.id, res.type)
+        this.setData({
+          classic: res,
+          latest: classicModel.isLatest(res.index),
+          first: classicModel.isFirst(res.index)
+        })
+      })
+    },
+
+    _getLikeStatus: function (artID, category) {
+      likeModel.getClassicLikeStatus(artID, category,
+        (res) => {
+          this.setData({
+            likeCount: res.fav_nums,
+            likeStatus: res.like_status
+          })
+        })
+    },
   }
-});
+})

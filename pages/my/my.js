@@ -1,16 +1,16 @@
-// pages/my/my.js
 import {
   ClassicModel
-} from "../../models/classic.js"
+} from '../../models/classic.js'
 import {
   BookModel
-} from "../../models/book.js"
+} from '../../models/book.js'
+
 import {
   promisic
-} from "../../util/common.js"
+} from '../../util/common.js'
 
-let classicModel = new ClassicModel()
-let bookModel = new BookModel()
+const classicModel = new ClassicModel()
+const bookModel = new BookModel()
 
 Page({
 
@@ -24,92 +24,32 @@ Page({
     classics: null
   },
 
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    this.userAuthorized()
+  onShow(options) {
+    this.userAuthorized1()
     this.getMyBookCount()
     this.getMyFavor()
-    //用户是否授权
-    //  wx.getUserInfo({
-    //    success:data=>{
-    //      console.log(data)
-    //    }
-    //  })
-    //弹窗 
-    //询问是否授权
-    //API
-    //button 组件 UI 让用户主动电机Button
+    // wx.getUserInfo({
+    //   success:data=>{
+    //     console.log(data)
+    //   }
+    // })
   },
+
   getMyFavor() {
     classicModel.getMyFavor(res => {
       this.setData({
-        classics: res.data
+        classics: res
       })
-      //  console.log(classics)
     })
   },
+
   getMyBookCount() {
     bookModel.getMyBookCount()
       .then(res => {
         this.setData({
-          bookCount: res.data.count
+          bookCount: res.count
         })
       })
-  },
-  userAuthorized() {
-    wx.getSetting({
-      success: data => {
-        console.log(data)
-        if (data.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: data => {
-              console.log(data)
-              this.setData({
-                authorized: true,
-                userInfo: data.userInfo
-              })
-            }
-          })
-        } else {
-          console.log("err")
-        }
-      }
-    })
-  },
-  onJumpToDetail(event) {
-    console.log(event);
-    const cid = event.detail.cid
-    const type = event.detail.type
-    wx.navigateTo({
-      url: `/pages/classic-detail/classic-detail?cid=${cid}&type=${type}`
-    })
-  },
-  getUserInfo(event) {
-    //   console.log(event)
-  },
-  onGetUserInfo(event) {
-    const userInfo = event.detail.userInfo
-    console.log(userInfo)
-    if (userInfo) {
-      this.setData({
-        userInfo,
-        authorized: true
-      })
-    }
-
-  },
-  onJumpToAbout(event) {
-    wx.navigateTo({
-      url: '/pages/about/about',
-    })
-  },
-  onStud(event) {
-    wx.navigateTo({
-      url: '/pages/course/course',
-    })
   },
 
   userAuthorized1() {
@@ -121,11 +61,12 @@ Page({
         return false
       })
       .then(data => {
-        if (!data) return
+        if (!data) return 
         this.setData({
           authorized: true,
           userInfo: data.userInfo
         })
+        console.log(data);
       })
   },
 
@@ -134,6 +75,7 @@ Page({
     wx.getSetting({
       success: data => {
         if (data.authSetting['scope.userInfo']) {
+
           wx.getUserInfo({
             success: data => {
               this.setData({
@@ -146,4 +88,52 @@ Page({
       }
     })
   },
+
+
+
+  onGetUserInfo(event) {
+    const userInfo = event.detail.userInfo
+    if (userInfo) {
+      this.setData({
+        userInfo,
+        authorized: true
+      })
+    }
+  },
+
+  onJumpToAbout(event) {
+    wx.navigateTo({
+      url: '/pages/about/about',
+    })
+  },
+
+  onStudy(event) {
+    wx.navigateTo({
+      url: '/pages/course/course',
+    })
+  },
+
+  onJumpToDetail(event){
+    const cid = event.detail.cid
+    const type = event.detail.type
+    // wx.navigateTo
+    wx.navigateTo({
+      url:`/pages/classic-detail/classic-detail?cid=${cid}&type=${type}`
+    })
+  }
+
+
 })
+
+
+
+
+
+
+
+
+
+    // wx.navigateTo({
+    //   url:`/pages/classic-detail/index?cid=${cid}
+    //     &type=${type}`
+    // })

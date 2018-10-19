@@ -21,7 +21,7 @@ Component({
    */
   methods: {
     onLoad(options) {
-
+      
     }
   }
 })

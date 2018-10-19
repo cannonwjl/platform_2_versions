@@ -1,5 +1,5 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
 	"packOptions": {
 		"ignore": []
 	},
@@ -11,9 +11,12 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.1",
+	"libVersion": "2.3.0",
 	"appid": "wxc88d94497e6ec829",
-	"projectname": "%E8%B7%B3%E8%9A%A4%E5%B8%82%E5%9C%BA%E4%BA%8C%E7%89%88",
+	"projectname": "%E6%97%A7%E5%B2%9B%E5%B0%8F%E6%A0%B7",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -24,35 +27,13 @@
 			"current": -1,
 			"list": []
 		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
-			"list": [
-				{
-					"id": 0,
-					"name": "book调试",
-					"pathName": "pages/book/book",
-					"query": "bid=1120"
-				},
-				{
-					"id": -1,
-					"name": "book调试",
-					"pathName": "pages/book-detail/book-detail",
-					"query": "bid=1120"
-				},
-				{
-					"id": -1,
-					"name": "abut_my",
-					"pathName": "pages/my/my"
-				}
-			]
+			"current": -1,
+			"list": []
 		}
 	}
 }

@@ -3,13 +3,13 @@ Component({
   /**
    * 组件的属性列表
    */
-  options:{
-    multipleSlots:true
+  options: {
+    multipleSlots: true 
   },
   properties: {
-      openType:{
-        type:String
-      }
+    openType: {
+      type: String
+    }
   },
 
   /**
@@ -23,9 +23,8 @@ Component({
    * 组件的方法列表
    */
   methods: {
-      getUserInfo(event)
-      {
-        this.triggerEvent("getuserinfo",event.data,{})
-      }
+    onGetUserInfo(event){
+      this.triggerEvent('getuserinfo', event.detail, {})
+    }
   }
 })

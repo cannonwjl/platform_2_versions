@@ -3,13 +3,12 @@ Component({
   /**
    * 组件的属性列表
    */
-  options:{
-    multipleSlots:true
+  options: {
+    multipleSlots: true,
   },
   externalClasses:['tag-class'],
   properties: {
-    text:String,
-    num:String
+    text: String
   },
 
   /**
@@ -24,7 +23,7 @@ Component({
    */
   methods: {
     onTap(event){
-      this.triggerEvent("tapping",{
+      this.triggerEvent('tapping',{
         text:this.properties.text
       })
     }

@@ -1,8 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "w-tag":"/components/tag/index",
-    "w-book":"/components/book/index",
-    "w-loading":"/components/loading/index"
+    "v-tag": "/components/tag/index",
+    "v-book":"/components/book/index",
+    "v-loading":"/components/loading/index"
   }
 }

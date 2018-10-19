@@ -1,10 +1,7 @@
-<view bind:tap="onTap" class='container tag-class'>
-  <!-- 普通样式 外部样式 -->
-  <text>{{text}}</text>
-  <!-- <text>{{num}}</text> -->
-  <slot name="after"></slot>
-  <!-- slot 插槽 
-  传参数就显示 不传不显示
-  可以传递一个标签进来
-  -->
+<view bind:tap="onTap" class="container tag-class ">
+    <slot name="before"></slot>
+    <text >{{text}}</text>
+    <slot name="after"></slot>
 </view>
+
+<!-- 普通样式 外部样式 -->

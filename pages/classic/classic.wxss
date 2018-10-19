@@ -1,260 +1,50 @@
-/* pages/classic/classic.wxss */
-.chunk{
-  width: 100px;
-  height: 100px;
-  /* //行内元素
-  display: inline-block; */
-}
-/* flex flexible box缩写为flex  弹性盒子：被弹性盒子包裹的 view 失去block（块）性质，
-即使加入block 也没有block的性质 */
-/* flex container flex :indeterminate */
-
-  
-.container1{
-  display: flex;
-  /* //  flex-direction: column;设置盒子内排布方式  column竖向排列 row横向排列（系统默认是row） */
-  /* //column-reverse 竖排+倒序     row-reverse 横排+倒序*/
-
-  /* //对于view组件  width:不设置默认为100%  height: 是自适应的根据内部元素决定
-    reverse会改变对齐方式和排布方式 如果高为400px 那么也会顶到下边 flex-direction: column-reverse；+height:100px */
-  flex-direction: column-reverse; 
-  /* /justify-content: flex-end; */
-  justify-content: flex-end;
-  /* /justify-content: flex-end 主轴 交叉轴 */
-  align-items: center;
-  height: 400px;
-  background-color: #999999;
-}
-.color1{
-  background-color: blue;
-}
-.color2{
-  background-color: aqua;
-}
-.color3{
-  background-color: burlywood;
-}
-
-
-
-/* //2018-9-8 */
-.header{
-  width: 100%;
-  
-  display: flex;
-  
-  flex-direction: row;
-  height: 100rpx;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid #f5f5f5;
-  border-bottom: 1px solid #f5f5f5;
-}
-
-.epsoide{
-  margin-left: 20rpx;
-  margin-top:4rpx;
-}
-
-.like{
-  margin-top: 6rpx;
-}
-.navi{
-  position: absolute;
-  bottom: 40rpx;
-}
-
-.share-btn{
-  margin-top: 28rpx;
-  margin-left: 10rpx;
-}
-.like-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 30rpx;
-}
-.share{
-  width: 40rpx;
-  height: 40rpx;
-}
-
-page {
-	height: 100%;
-}
 .container {
-	height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-scroll-view {
-	height: 100%;
-}
+
 .header {
-	position: fixed;
-	display: -webkit-flex;
-	left: 0;
-	top: 0;
-	width: 100%;
-	padding: 20rpx;
-	box-sizing: border-box;
-	z-index: 1;
-	-webkit-transition: background 0.5s ease-in-out;
-}
-.header.scrolled {
-	background: #008000;
-}   
-.header .icon {
-	width: 40rpx;
-	height: 40rpx;
-	vertical-align: top;
-}
-.header .location {
-	color: #fff;
-	font-size: 30rpx;
-	line-height: 40rpx;
-	min-width: 100rpx;
-	max-width: 340rpx;
-	padding: 10rpx 20rpx 10rpx 10rpx;
-	border-radius: 30rpx;
-	background: rgba(0,0,0,0.3);
-	margin-right: 20rpx;
-	vertical-align: middle;
-}
-.header .search {
-	-webkit-flex: 1;
-	color: #888;
-	font-size: 30rpx;
-	line-height: 40rpx;
-	padding: 10rpx;
-	border-radius: 30rpx;
-	background: #fff;
-	/*border-bottom: 1rpx solid #aaa;*/
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 100rpx;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f5f5f5;
 }
 
-.banner {
-	height: 330rpx;
-}
-.banner image {
-	width: 100%;
-	height: 100%;
+.episode {
+    margin-left: 20rpx;
+    margin-top: 4rpx;
 }
 
-.icons {
-	height: 370rpx;
-	padding: 20rpx 10rpx;
-	padding-bottom: 0;
-}
-.icons swiper-item {
-	width: 100%;
-	/*display: -webkit-flex;*/
-	/*flex-direction: row;*/
-	/*flex-wrap: wrap;*/
-	/*justify-content: center;*/
-}
-.icons .icon {
-	float: left;
-	display: -webkit-flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	width: 25%;
-	text-align: center;
-	margin: 10rpx 0;
-}
-.icons .icon image {
-	margin: 0 auto;
-	width: 100rpx;
-	height: 100rpx;
-}
-.icons .icon text {
-	color: #000;
-	font-size: 24rpx;
-	line-height: 2;
+.like {
+    margin-top: 6rpx;
 }
 
-.section-big {
-	padding: 20rpx;
-}
-.section-big .title {
-	position: relative;
-	text-align: center;
-	font-size: 32rpx;
-	font-weight: bold;
-	line-height: 2;
-	margin-bottom: 20rpx;
-}
-.section-big .title:before {
-	content: " ";
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -180rpx;
-	width: 100rpx;
-	height: 1rpx;
-	background: #000;
-}
-.section-big .title:after {
-	content: " ";
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: 80rpx;
-	width: 100rpx;
-	height: 1rpx;
-	background: #000;
+.navi {
+    position: absolute;
+    bottom: 40rpx;
 }
 
-.discount .content {
-	width: 100%;
-	height: 500rpx;
+.like-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right:30rpx;
+  }
+  
+
+.share-btn {
+    margin-top: 28rpx;
+    margin-left: 10rpx;
 }
 
-.preferred .content {
-	width: 100%;
-	height: 500rpx;
-}
-
-.special .content {
-	width: 100%;
-	height: 500rpx;
-}
-
-.nearby {
-	padding-left: 0;
-	padding-right: 0;
-}
-.nearby .filters {
-	display: -webkit-flex;
-	border-top: 1rpx solid #efefef;
-}
-.nearby .filters .filter {
-	-webkit-flex: 1;
-	text-align: center;
-	color: #696969;
-	font-size: 30rpx;
-	line-height: 3;
-}
-.nearby .filters .filter .v {
-	display: none;
-}
-.nearby .filters .filter.active {
-	color: #000;
-	font-weight: bold;
-}
-.nearby .filters .filter.active .v {
-	display: inline-block;
-}
-.nearby .shop {
-	padding: 10rpx 0;
-	border-top: 1rpx solid #efefef;
-}
-.nearby .shop image {
-	width: 100%;
-	height: 266rpx;
-}
-
-.loading {
-	font-size: 32rpx;
-	text-align: center;
-	line-height: 2;
-	margin-bottom: 20rpx;
+.share {
+    width: 40rpx;
+    height: 40rpx;
 }

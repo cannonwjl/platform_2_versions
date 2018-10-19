@@ -1,15 +1,16 @@
-// components/classic/essay/index.js
-import {classicBeh}  from '../classic-beh.js'
+import {classicBeh} from '../classic-beh.js'
+
 Component({
   /**
-   * 组件的属性列表
+   * 组件的属性列表 
    */
-  //继承classic-beh.js下的属性
   behaviors:[classicBeh],
-  //那么下面的img和content就可以删除了
+  // 多继承
   properties: {
-   // img: String,
-  //  content: String
+  },
+
+  attached:function(){
+
   },
 // behavior 行为
   /**
