@@ -1,4 +1,4 @@
-const AV=require("../utils/av-weapp-min.js");
+const AV=require("../util/av-weapp-min.js");
 
 class Todo extends AV.Object{
   get content(){return this.get("content")}

@@ -1,3 +1,10 @@
+const AV=require("../../util/av-weapp-min.js");
+const Todo=require("../../models/todo.js");
+
+// import{
+//   AV
+// }
+
 import {
   ClassicModel
 } from '../../models/classic.js'
@@ -8,6 +15,9 @@ import {
 import {
   promisic
 } from '../../util/common.js'
+
+
+
 
 const classicModel = new ClassicModel()
 const bookModel = new BookModel()
@@ -21,13 +31,15 @@ Page({
     authorized: false,
     userInfo: null,
     bookCount: 0,
-    classics: null
+    classics: null,
+    todos_user:[],
   },
 
   onShow(options) {
     this.userAuthorized1()
     this.getMyBookCount()
-    this.getMyFavor()
+    this.getMyFavor(this.data.userInfo);
+    //this.addTodo()
     // wx.getUserInfo({
     //   success:data=>{
     //     console.log(data)
@@ -52,6 +64,16 @@ Page({
       })
   },
 
+  addTodo: function (data) {
+    console.log(data);
+    new Todo({
+      nickName: data.userInfo.nickName,
+      avatarUrl: data.userInfo.avatarUrl,
+      language: data.userInfo.language,
+    }).save().then(console.log).catch(console.error);
+  },
+
+  
   userAuthorized1() {
     promisic(wx.getSetting)()
       .then(data => {
@@ -82,7 +104,9 @@ Page({
                 authorized: true,
                 userInfo: data.userInfo
               })
+              this.addTodo(data);
             }
+           
           })
         }
       }
@@ -98,7 +122,15 @@ Page({
         userInfo,
         authorized: true
       })
+      // new AV.Query(Todo).find().then(todos => this.setData({
+      //   todos
+      // }).catch(console.error),
+      
     }
+
+  
+
+
   },
 
   onJumpToAbout(event) {
