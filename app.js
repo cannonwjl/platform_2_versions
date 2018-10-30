@@ -32,6 +32,8 @@ App({
               wx.setStorageSync('openId', res.data.openid);
             }
           })
+
+          
         }
       })
     }

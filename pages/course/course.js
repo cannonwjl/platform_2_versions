@@ -5,6 +5,7 @@ Page({
   data: {
     task: {
       name: '',
+      introdution:'',
       address: '点击选择地点',
       signTime: '00:00',
       signEarlyTime: '00:00',
@@ -29,14 +30,20 @@ Page({
     modalHidden: true
   },
 
-  // 设置任务名称
+  // 设置物品名称
   bindKeyInput: function (e) {
     this.setData({
       'task.name': e.detail.value
     });
   },
+  // 设置物品介绍
+  bindKeyInput1: function (e) {
+    this.setData({
+      'task.introdution': e.detail.value
+    });
+  },
 
-  // 设置任务地点
+  // 设置物品地点
   chooseLocation: function () {
     var that = this;
 
@@ -81,49 +88,6 @@ Page({
     })
   },
 
-  // 设置重复日
-  changeMonday: function (e) {
-    var state = this.data.task.repeat.monday;
-    this.setData({
-      'task.repeat.monday': (state == 1 ? 0 : 1)
-    });
-  },
-  changeTuesday: function (e) {
-    var state = this.data.task.repeat.tuesday;
-    this.setData({
-      'task.repeat.tuesday': (state == 1 ? 0 : 1)
-    });
-  },
-  changeWednesday: function (e) {
-    var state = this.data.task.repeat.wednesday;
-    this.setData({
-      'task.repeat.wednesday': (state == 1 ? 0 : 1)
-    });
-  },
-  changeThursday: function (e) {
-    var state = this.data.task.repeat.thursday;
-    this.setData({
-      'task.repeat.thursday': (state == 1 ? 0 : 1)
-    });
-  },
-  changeFriday: function (e) {
-    var state = this.data.task.repeat.friday;
-    this.setData({
-      'task.repeat.friday': (state == 1 ? 0 : 1)
-    });
-  },
-  changeSaturday: function (e) {
-    var state = this.data.task.repeat.saturday;
-    this.setData({
-      'task.repeat.saturday': (state == 1 ? 0 : 1)
-    });
-  },
-  changeSunday: function (e) {
-    var state = this.data.task.repeat.sunday;
-    this.setData({
-      'task.repeat.sunday': (state == 1 ? 0 : 1)
-    });
-  },
 
   // 隐藏提示弹层
   modalChange: function (e) {
@@ -212,7 +176,7 @@ Page({
     var that = this;
     var task = this.data.task;
     var creating = this.data.creating;
-
+  console.log(this.data);
     if (task.name == '' || task.address == '点击选择地点') {
       this.setData({
         modalHidden: false
