@@ -49,6 +49,7 @@ Page({
 
   getMyFavor() {
     classicModel.getMyFavor(res => {
+      console.log(res)
       this.setData({
         classics: res
       })

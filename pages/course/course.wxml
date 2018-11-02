@@ -30,9 +30,10 @@
     
 
         <!-- 最早打卡时间 -->
-        <view class="mod t-early">
+        <view class="mod t-early" >
             <text class="key">上传照片</text>
-            <text class="value" >点击上传图片</text>
+            <text class="value" bindtap='uploadImg'>点击上传图片</text>
+            <image src='{{img_url}}'></image>
         </view>
 
       

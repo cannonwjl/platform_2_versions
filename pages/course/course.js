@@ -1,8 +1,12 @@
 var util = require('../../util/util.js');
 var app = getApp();
+const Todo = require('../../models/todo.js');
+const AV = require('../../util/av-weapp-min.js');
+
 
 Page({
   data: {
+    img_url:'',
     task: {
       name: '',
       introdution:'',
@@ -170,6 +174,33 @@ Page({
       }
     })
   },
+
+  uploadImg:function()
+{
+    // new AV.initialize();
+    console.log("测试上传代码运行")
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: data => {
+        const tempFilePath = data.tempFilePaths[0];
+        console.log(tempFilePath)
+        new AV.File('file-name', {
+          blob: {
+            uri: tempFilePath,
+          },
+        }).save().then(
+          file => console.log(file.url()),
+        ).catch(console.error);
+        this.setData({
+          img_url: data.tempFilePaths[0]
+        })
+
+
+      },
+    })
+},
 
   // 提交、检验
   bindSubmit: function (e) {
