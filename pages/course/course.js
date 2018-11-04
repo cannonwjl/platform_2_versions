@@ -11,6 +11,7 @@ Page({
       name: '',
       introdution:'',
       address: '点击选择地点',
+      address1:'',
       signTime: '00:00',
       signEarlyTime: '00:00',
       startDay: '2016-11-00',
@@ -45,6 +46,12 @@ Page({
     this.setData({
       'task.introdution': e.detail.value
     });
+  },
+  bindKeyInput2:function(e)
+  {
+    this.setData({
+      'task.address1': e.detail.value
+    })
   },
 
   // 设置物品地点
@@ -100,61 +107,50 @@ Page({
     })
   },
 
+  addTodo: function () {
+    console.log(this.data);
+    new Todo({
+      content: this.data.img_url,
+      done: false,
+    }).save().then(todo => {
+      this.setData({
+        // todos: [...this.data.todos, todo],
+       // //输入框置空
+     //   draft: "",
+      });
+
+    },
+    ).catch(console.error);
+  },
+
   // 创建任务
   createTask: function () {
     var that = this;
     var task = this.data.task;
     var openId = this.data.openId;
     var userInfo = this.data.userInfo;
-
+    console.log(this.data)
     wx.showToast({
       title: '新建中',
       icon: 'loading',
       duration: 10000
     });
-
-    wx.request({
-      url: 'https://www.cpcsign.com/api/task',
-      data: {
-        name: task.name,
-        address: task.address,
-        startTime: task.startDay,
-        endTime: task.endDay,
-        signTime: task.signTime,
-        latitude: task.latitude,
-        longitude: task.longitude,
-        repeat: {
-          'monday': task.repeat.monday,
-          'tuesday': task.repeat.tuesday,
-          'wednesday': task.repeat.wednesday,
-          'thursday': task.repeat.thursday,
-          'friday': task.repeat.friday,
-          'saturday': task.repeat.saturday,
-          'sunday': task.repeat.sunday
-        },
-        userInfo: {
-          openId: openId,
-          nickName: userInfo.nickName,
-          avatarUrl: userInfo.avatarUrl
-
-        }
-        
-        
-        
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: {
-        'Content-Type': 'application/json'
-      }, // 设置请求的 header
-      success: function (res) {
-        // success
+    that.addTodo(),
+        // new AV.File('file-name', {
+        //   blob: {
+        //     uri: this.data.img_url,
+        //   },
+        // }).save().then(
+        //   file => console.log(file.url()),
+        // ).catch(console.error);
+      
 
         wx.hideToast();
 
-        var command = res.data.taskID;
+        
 
         wx.navigateTo({
-          url: '/pages/new/success/success?command=' + command,
+          url: '/pages/my/my',
           success: function (res) {
             // success
           },
@@ -165,14 +161,8 @@ Page({
             // complete
           }
         })
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
+     
+      
   },
 
   uploadImg:function()
@@ -186,13 +176,14 @@ Page({
       success: data => {
         const tempFilePath = data.tempFilePaths[0];
         console.log(tempFilePath)
-        new AV.File('file-name', {
-          blob: {
-            uri: tempFilePath,
-          },
-        }).save().then(
-          file => console.log(file.url()),
-        ).catch(console.error);
+        //上传部分
+        // new AV.File('file-name', {
+        //   blob: {
+        //     uri: tempFilePath,
+        //   },
+        // }).save().then(
+        //   file => console.log(file.url()),
+        // ).catch(console.error);
         this.setData({
           img_url: data.tempFilePaths[0]
         })
@@ -207,7 +198,7 @@ Page({
     var that = this;
     var task = this.data.task;
     var creating = this.data.creating;
-  console.log(this.data);
+  // console.log(this.data);
     if (task.name == '' || task.address == '点击选择地点') {
       this.setData({
         modalHidden: false

@@ -26,18 +26,22 @@
             <text class="value">{{task.address}}</text>
             <image class="arrow-r" src="../../images/new/arrow-r-0.png"></image>
         </view>
-
+      <view class="mod t-address" >
+            <text class="key">详情地点</text>
+            <input bindinput="bindKeyInput2" class="value" maxlength="100" placeholder="请输入几号楼" />
+            <image class="arrow-r" src="../../images/new/arrow-r-0.png"></image>
+        </view>
     
 
         <!-- 最早打卡时间 -->
         <view class="mod t-early" >
             <text class="key">上传照片</text>
             <text class="value" bindtap='uploadImg'>点击上传图片</text>
-            <image src='{{img_url}}'></image>
+            
         </view>
 
       
-
+<image class='img' wx:if="{{img_url}}" src='{{img_url}}'></image>
     </view>
 
 
