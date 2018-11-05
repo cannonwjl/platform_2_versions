@@ -1,14 +1,19 @@
+
+const Todo = require('../../util/todo.js');
+const AV = require('../../util/av-weapp-min.js');
 var util = require('../../util/util.js');
 var app = getApp();
-const Todo = require('../../models/todo.js');
-const AV = require('../../util/av-weapp-min.js');
+
+var UserData = AV.Object.extend('DataTypeTest');
 
 
 Page({
   data: {
+ 
     img_url:'',
     task: {
       name: '',
+      price:'',
       introdution:'',
       address: '点击选择地点',
       address1:'',
@@ -53,7 +58,12 @@ Page({
       'task.address1': e.detail.value
     })
   },
-
+  bindKeyInputPrice:function(e)
+  {
+    this.setData({
+      'task.price': e.detail.value
+    })
+  },
   // 设置物品地点
   chooseLocation: function () {
     var that = this;
@@ -107,21 +117,45 @@ Page({
     })
   },
 
-  addTodo: function () {
-    console.log(this.data);
-    new Todo({
-      content: this.data.img_url,
-      done: false,
-    }).save().then(todo => {
-      this.setData({
-        // todos: [...this.data.todos, todo],
-       // //输入框置空
-     //   draft: "",
-      });
 
-    },
-    ).catch(console.error);
-  },
+
+//创建上传
+crateUpload:function(){
+  var img_url = this.data.img_url;
+  //var string = 'famous film name is ' + number;
+  var price=this.data.task.price;                  //物品名字
+  var name=this.data.task.name;                   //物品名字
+  var introdution=this.data.task.introdution;       //物品介绍
+  var address = this.data.task.address;           //地址
+  var address1 = this.data.task.address1;       //详情地址
+  var openid = this.data.openId;              //openID
+  var nickName=this.data.userInfo.nickName;  //用户名字
+  var date = new Date();                     //时间
+//查看打印数据
+  console.log(img_url+"="+price+"="+name+"=" +introdution+"="+address+"="+address1+"="+openid+"="+nickName+"="+date)
+  // var array = [string, number];
+  // var object = { number: number, string: string };
+
+  var userData = new UserData();
+  userData.set('uesr_img', img_url);
+  userData.set('thing_name', name);
+  userData.set('thing_price', price);
+  userData.set('thing_introdution', introdution);
+  userData.set('address', address);
+  userData.set('address1', address1);
+  userData.set('openid', openid);
+  userData.set('nickName', nickName);
+  userData.set('upload_Date', date);
+  
+  userData.save().then(function (userData) {
+    // 成功
+    console.log("successful!!")
+  }, function (error) {
+    // 失败
+  });
+  console.log("successful!!")
+},
+
 
   // 创建任务
   createTask: function () {
@@ -135,14 +169,8 @@ Page({
       icon: 'loading',
       duration: 10000
     });
-    that.addTodo(),
-        // new AV.File('file-name', {
-        //   blob: {
-        //     uri: this.data.img_url,
-        //   },
-        // }).save().then(
-        //   file => console.log(file.url()),
-        // ).catch(console.error);
+   that.crateUpload()
+
       
 
         wx.hideToast();

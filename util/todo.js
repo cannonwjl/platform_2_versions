@@ -1,6 +1,7 @@
-const AV = require('../utils/av-weapp-min.js');
+const AV = require('/av-weapp-min.js');
 
 class Todo extends AV.Object {
+
   get content() { return this.get("content") }
   set content(value) { return this.set("content", value) }
   get done() { return this.get("done") }

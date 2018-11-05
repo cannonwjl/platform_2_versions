@@ -8,6 +8,15 @@ class Todo extends AV.Object{
 
 }
 
+// var TestObject = AV.Object.extend('TestObject');
+// var testObject = new TestObject();
+// testObject.save({
+//   words: 'Hello World!'
+// }).then(function (object) {
+//   alert('LeanCloud Rocks!');
+// })
+
+
 AV.Object.register(Todo);
 module.exports=Todo;
 //以上调用app文件  注意这里是 register 不是 reqister

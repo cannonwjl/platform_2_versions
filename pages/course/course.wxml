@@ -8,7 +8,12 @@
             <input bindinput="bindKeyInput" class="input" maxlength="100" placeholder="请输入物品名称" />
             <image class="arrow-r" src="../../images/new/arrow-r-0.png"></image>
         </view>  
-
+          <!-- 添加价格-->
+        <view class="mod t-name">
+            <text class="key">物品价格</text>
+             <input bindinput="bindKeyInputPrice" class="input" maxlength="100" placeholder="请输入物品价格" />
+            <image class="arrow-r" src="../../images/new/arrow-r-0.png"></image>
+        </view>
 
               <!-- 添加说明 -->
         <view class="mod t-name">
